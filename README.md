@@ -12,4 +12,4 @@ It's a timed game played by sliding across neighboring letters to form words tha
 ## How can I use this program to find the largest possible words?
 All you need to do is type in the letters in the order you see them on this program, and click solve to find the list of possible words in order from largest to smallest (for the largest amount of points). You can also hover any of the words to see what path forms the word.
 
-<img src="readme_src/Example_Program_Usage.png" width="600"/>
+<img src="readme_src/Example_Program_Usage.png"/>
