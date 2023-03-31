@@ -1,0 +1,119 @@
+* {
+    background-color: #648f61;
+}
+
+#grid input {
+    width: 30px; /* set the width of the input box */
+    height: 30px; /* set the height of the input box */
+    text-align: center; /* center the text inside the input box */
+    padding: 10px;
+    margin: 10px;
+    font-size: 30px;
+    background-color: #e3bc7d;
+    border-radius: 5px;
+    border-color: #e3bc7d;
+    border: 5px solid #e3bc7d;
+}
+
+#grid {
+    /* align-self: center; */
+    margin-left: 15%;
+    margin-top: 100px;
+    float: left;
+    position: relative;
+    /* z-index: 0; */
+}
+
+#grid canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    /* stroke-opacity: 0.8; */
+}
+
+#submit-btn {
+    background-color: #167dfb;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    border-color: #167dfb;
+    width: 200px;
+    margin-left: 55px;
+    margin-top: 30px;
+    font-size: 20px;
+}
+
+#submit-btn:hover {
+    background-color: #0073ff;
+}
+
+#submit-btn:active {
+    transform: scale(0.95);
+}
+
+#clear-btn {
+    background-color: #ff3535;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    border-color: #ff3535;
+    width: 200px;
+    margin-left: 55px;
+    margin-top: 30px;
+    font-size: 20px;
+}
+
+#clear-btn:hover {
+    background-color: #ff0000;
+}
+
+#clear-btn:active {
+    transform: scale(0.95);
+}
+
+#wordList {
+    margin-right: 10%;
+    margin-top: 5vh;
+    border-radius: 10px;
+    width: 40%;
+    overflow: scroll;
+    height: 90vh;
+    float: right;
+}
+
+.word_length_category{
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border-width: 2px;
+    border-color: black;
+    overflow: hidden;
+    padding: 5px;
+    background-color: rgb(225, 225, 225);
+}
+
+h2 {
+    background-color: rgb(225, 225, 225);
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: larger;
+    background-color: rgb(121, 125, 180);
+    color: rgb(225, 225, 225);
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px;
+    float: left;
+    width: fit-content;
+    font-weight: bold;
+}
+
+p:hover {
+    background-color: rgb(78, 80, 119); /* darken the background color on hover */
+}
+
+  
