@@ -273,6 +273,10 @@ function check_and_move(event, element){
 }
 
 function clear_input(){
+	var canvases = document.querySelectorAll("canvas");
+	canvases.forEach(function(canvas) {
+		canvas.remove();
+	});
 	const element = document.getElementById("wordList");
 	if (element) {
   		element.remove();
