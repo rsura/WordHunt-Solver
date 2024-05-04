@@ -3,6 +3,7 @@ element_grid = [];
 graph_grid = [];
 elements_row = [];
 all_current_paragraphs = [];
+starting_node = null;
 minWordSize = 3;
 maxWordSize = 9;
 print = console.log;
@@ -10,7 +11,7 @@ length_scores = {9:2600,8:2200,7:1800,6:1400,5:800,4:400,3:100};
 
 word_set = {};
 var xhr = new XMLHttpRequest();
-xhr.open('GET', 'https://raw.githubusercontent.com/rsura/WordHunt-Solver/main/EnglishWords.txt', true);
+xhr.open('GET', 'https://raw.githubusercontent.com/rsura/WordHunt-Solver/main/src/EnglishWords.txt', true);
 xhr.onreadystatechange = function() {
   if (xhr.readyState === 4 && xhr.status === 200) {
     arr = xhr.responseText.split("\n");
@@ -107,12 +108,12 @@ class Path{
 }
 
 function drawPath(p){
-	x_col_num_vals = [40,125,205,290]
-	y_row_num_vals = [40,125,200,280]
+	x_col_num_vals = [40,125,205,290,380]
+	y_row_num_vals = [40,125,200,280,360]
 	function drawLine(x1, y1, x2, y2, color){
 		const canvas = document.createElement("canvas");
-		canvas.width = 340;
-		canvas.height = 350;
+		canvas.width = 450;
+		canvas.height = 450;
 		canvas.style.backgroundColor = "transparent";
 
 		const ctx = canvas.getContext("2d");
@@ -126,6 +127,8 @@ function drawPath(p){
 
 		document.getElementById("grid").appendChild(canvas);
 	}
+    starting_node = p.nodes[0].element;
+    starting_node.style.backgroundColor = "#ffff00";
 	for(let i = 0; i < p.coordinates.length - 1; i++){
 		drawLine(p.coordinates[i][0], p.coordinates[i][1], p.coordinates[i + 1][0], p.coordinates[i + 1][1], "#ff0000");
 	}
@@ -135,8 +138,11 @@ function run(){
 	start();
 
 	// Check input
-	for (let i = 0; i < 4; i++) {
-		for (let j = 0; j < 4; j++) {
+	for (let i = 0; i < 5; i++) {
+		for (let j = 0; j < 5; j++) {
+            if (element_grid[i][j] === null){
+                continue;
+            }
 			if (!(element_grid[i][j].value != null && element_grid[i][j].value.length == 1 && element_grid[i][j].value.match(/^[A-Za-z]+$/))){
 				print('Invalid Inputs');
 				return;
@@ -146,9 +152,13 @@ function run(){
 	}
 
 	// Make GraphNodes
-	for (let i = 0; i < 4; i++) {
+	for (let i = 0; i < 5; i++) {
 		let row = [];
-		for (let j = 0; j < 4; j++) {
+		for (let j = 0; j < 5; j++) {
+            if (element_grid[i][j] === null){
+                row.push(null);
+                continue;
+            }
 			let node = new GraphNode(element_grid[i][j].value,i,j, element_grid[i][j]);
 			row.push(node);
 		}
@@ -156,16 +166,19 @@ function run(){
 	}
 
 	// Uppercase the letters
-	for (let i = 0; i < 4; i++) {
-		for (let j = 0; j < 4; j++) {
+	for (let i = 0; i < 5; i++) {
+		for (let j = 0; j < 5; j++) {
+            if (element_grid[i][j] === null){
+                continue;
+            }
 			element_grid[i][j].value = element_grid[i][j].value.toUpperCase();
 		}
 	}
 
 	// Make grid connections
 	const _offsets = [-1,0,1];
-	for (let i = 0; i < 4; i++) {
-		for (let j = 0; j < 4; j++) {
+	for (let i = 0; i < 5; i++) {
+		for (let j = 0; j < 5; j++) {
 			for(let m of _offsets){
 				for(let n of _offsets){
 					if (m === 0 && n === 0){
@@ -234,6 +247,7 @@ function run(){
 			drawPath(word_path_dict[paragraph.innerText.toLowerCase()])
 		});
 		paragraph.addEventListener("mouseout", function() {
+            starting_node.style.backgroundColor = "#e3bc7d";
 			var canvases = document.querySelectorAll("canvas");
 			canvases.forEach(function(canvas) {
 				canvas.remove();
@@ -248,15 +262,20 @@ function run(){
 
 }
 
-function check_and_move(event, element){
-	function getNextValue(elem){
-		for(let i = 0; i < 16; i++){
-			if (elem === elements_row[i]){
-				return elements_row[i+1];
-			}
-		}
-	}
+function getNextValue(elem){
+    for(let i = 0; i < elements_row.length; i++){
+        if (elem === elements_row[i]){
+            temp = elements_row[i+1];
+            while(temp === null){
+                i++;
+                temp = elements_row[i+1];
+            }
+            return temp;
+        }
+    }
+}
 
+function check_and_move(event, element){
 	var input = event.target.value;
     var valid_char = input.match(/^[A-Za-z]+$/);
 	var valid_len = (input.length == 1);
@@ -265,7 +284,7 @@ function check_and_move(event, element){
 		return;
     } else {
 		if (element.value.length === element.maxLength) {
-			getNextValue(element).focus();
+            getNextValue(element).focus();
 		} else {
 			element.value = '';
 		}
@@ -281,12 +300,20 @@ function clear_input(){
 	if (element) {
   		element.remove();
 	}
-	for (let i = 0; i < 4; i++) {
-		for (let j = 0; j < 4; j++) {
+	for (let i = 0; i < 5; i++) {
+		for (let j = 0; j < 5; j++) {
+            if (element_grid[i][j] === null){
+                continue;
+            }
 			element_grid[i][j].value = '';
+            element_grid[i][j].style.backgroundColor = "#e3bc7d";
 		}
 	}
-	element_grid[0][0].focus();
+	temp = elements_row[0];
+    while(temp === null){
+        temp = getNextValue(temp);
+    }
+    temp.focus();
 }
 
 
@@ -306,11 +333,13 @@ function start(){
 	graph_grid = [];
 	elements_row = [];
 
-	for (let i = 0; i < 4; i++) {
+	for (let i = 0; i < 5; i++) {
 		let row = [];
-		for (let j = 0; j < 4; j++) {
+		for (let j = 0; j < 5; j++) {
 			let cell = document.getElementById(`cell-${i}-${j}`);
 			if (cell === null){
+                elements_row.push(null);
+                row.push(null);
 				continue;
 			}
 			cell.addEventListener('focus', () => {
@@ -322,7 +351,11 @@ function start(){
 		element_grid.push(row);
 	}
 	elements_row.push(submitBtn);
-	elements_row[0].focus();
+	temp = elements_row[0];
+    while(temp === null){
+        temp = getNextValue(temp);
+    }
+    temp.focus();
 }
 
 start();
