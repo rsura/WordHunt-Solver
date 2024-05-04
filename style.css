@@ -137,7 +137,7 @@ p:hover {
 
     margin: 0 10px;
     width: 25%;
-    display: flex;
+    /* display: flex; */
     justify-content: center;
     align-items: center;
     text-decoration: none;
