@@ -310,7 +310,10 @@ function start(){
 		let row = [];
 		for (let j = 0; j < 4; j++) {
 			let cell = document.getElementById(`cell-${i}-${j}`);
-			document.getElementById(`cell-${i}-${j}`).addEventListener('focus', () => {
+			if (cell === null){
+				continue;
+			}
+			cell.addEventListener('focus', () => {
 				document.getElementById(`cell-${i}-${j}`).select();
 			})
 			elements_row.push(cell);
