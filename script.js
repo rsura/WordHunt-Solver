@@ -4,13 +4,13 @@ graph_grid = [];
 elements_row = [];
 all_current_paragraphs = [];
 minWordSize = 3;
-maxWordSize = 8;
+maxWordSize = 9;
 print = console.log;
-length_scores = {8:2200,7:1800,6:1400,5:800,4:400,3:100};
+length_scores = {9:2600,8:2200,7:1800,6:1400,5:800,4:400,3:100};
 
 word_set = {};
 var xhr = new XMLHttpRequest();
-xhr.open('GET', 'EnglishWords.txt', true);
+xhr.open('GET', 'https://raw.githubusercontent.com/rsura/WordHunt-Solver/main/EnglishWords.txt', true);
 xhr.onreadystatechange = function() {
   if (xhr.readyState === 4 && xhr.status === 200) {
     arr = xhr.responseText.split("\n");
@@ -29,11 +29,11 @@ class GraphNode {
 		this.element = element;
 		this.nodesConnectedTo = new Set();
 	}
-  
+
 	getConnectedNodes() {
 		return new Set([...this.nodesConnectedTo]);
 	}
-  
+
 	connectToNode(g) {
 		if (this === g || g === null) {
 			return false;
@@ -44,10 +44,10 @@ class GraphNode {
 	  	this.nodesConnectedTo.add(g);
 	  	return true;
 	}
-  
+
 	static connectNodes(g1, g2) {
 	  	if (g1 === null || g2 === null) return false;
-  
+
 	  	if (typeof g1.val !== typeof g2.val) {
 			throw new Error("Graph nodes are not of the same type!");
 	  	}
@@ -58,7 +58,7 @@ class GraphNode {
 	  	g2.connectToNode(g1);
 	  	return true;
 	}
-  
+
 	toString() {
 	  	let connectedNodes = Object.values(this.nodesConnectedTo);
 	  	let sb =
@@ -67,7 +67,7 @@ class GraphNode {
 			") connected to " +
 			connectedNodes.length +
 			" GraphNodes: (";
-  
+
 	  	connectedNodes.forEach(node => {
 			sb += node.val + ", ";
 	  	});
@@ -75,7 +75,7 @@ class GraphNode {
 	  	sb += ")";
 	  	return sb;
 	}
-  
+
 	equals(o) {
 	  	if (this === o) return true;
 	  	if (o === null || this.constructor !== o.constructor) return false;
@@ -174,7 +174,7 @@ function run(){
 					try{
 						graph_grid[i][j].connectToNode(graph_grid[i+m][j+n]);
 					} catch (e){}
-				}	
+				}
 			}
 		}
 	}
@@ -245,7 +245,7 @@ function run(){
 	} else {
 		document.getElementById('clear-btn').focus();
 	}
-	
+
 }
 
 function check_and_move(event, element){
@@ -298,7 +298,7 @@ function start(){
 	}
 	const newDiv = document.createElement("div");
 	newDiv.id = "wordList";
-	
+
 	document.getElementById("this_script").parentNode.insertBefore(newDiv, document.getElementById("this_script"));
 	// document.body.appendChild(newDiv);
 

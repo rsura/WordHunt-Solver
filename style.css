@@ -1,5 +1,6 @@
 * {
     background-color: #648f61;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #grid input {
@@ -39,8 +40,8 @@
     padding: 10px;
     border-radius: 10px;
     border-color: #167dfb;
-    width: 200px;
-    margin-left: 55px;
+    width: 60%;
+    margin-left: 20%;
     margin-top: 30px;
     font-size: 20px;
 }
@@ -59,8 +60,8 @@
     padding: 10px;
     border-radius: 10px;
     border-color: #ff3535;
-    width: 200px;
-    margin-left: 55px;
+    width: 60%;
+    margin-left: 20%;
     margin-top: 30px;
     font-size: 20px;
 }
@@ -122,4 +123,41 @@ p:hover {
     background-color: rgb(78, 80, 119); /* darken the background color on hover */
 }
 
-  
+.menu-bar {
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    background-color: #648f61;
+    padding: 10px;
+}
+
+.menu-item {
+    color: #648f61;
+    background-color: #e3bc7d;
+
+    margin: 0 10px;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.menu-item-active {
+    color: #e3bc7d;
+    background-color: #476d44;
+
+    margin: 0 10px;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
